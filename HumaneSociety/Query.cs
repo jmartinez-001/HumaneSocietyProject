@@ -167,7 +167,7 @@ namespace HumaneSociety
                     GetEmployeeByID(employee.EmployeeId);
                     break;
                 case "create":
-                    AddEmployee(employee)
+                    AddEmployee(employee);
                     break;
                 default:
 
@@ -225,7 +225,9 @@ namespace HumaneSociety
 
         internal static void UpdateAnimal(Animal animal, Dictionary<int, string> updates)
         {
-            throw new NotImplementedException();
+            Animal animalFromDb = db.Animals.Where(a => a.AnimalId == animal.AnimalId).Single();
+
+            
         }
 
         internal static void RemoveAnimal(Animal animal)
