@@ -1,0 +1,36 @@
+ALTER TABLE DietPlans 
+ALTER COLUMN FoodAmountInCups DECIMAL
+
+INSERT INTO Categories VALUES ('Dog')
+INSERT INTO Categories VALUES ('Cat')
+INSERT INTO Categories VALUES ('Bird')
+INSERT INTO Categories VALUES ('Reptile')
+INSERT INTO Categories VALUES ('Small Mammal')
+
+INSERT INTO DietPlans VALUES ( 'Big Dog Food' , 'Kibble' , 2)
+INSERT INTO DietPlans VALUES ( 'Small Dog Food' , 'Kibble' , 1)
+INSERT INTO DietPlans VALUES ( 'Cat Food' , 'Meow Mix' , .5)
+INSERT INTO DietPlans VALUES ( 'Bird Seeds' , 'Sunflower Seeds' , .5)
+INSERT INTO DietPlans VALUES ( 'Vegetables' , 'Carrots' , 1)
+INSERT INTO DietPlans VALUES ( 'Bugs' , 'Crickets' , 1)
+
+
+INSERT INTO Animals VALUES ('Neo' , 58 , 3 , 'Docile' , 1 , 0 , 'Male' , 'Available' , 1 , 1 , null ) 
+INSERT INTO Animals VALUES ('Ledger' , 61 , 2 , 'Hyper' , 1 , 1 , 'Male' , 'Available' , 1 , 1 , null)
+INSERT INTO Animals VALUES ('Puma' , 15 , 10 , 'Docile' , 1 , 0 , 'Female' , 'Available' , 2 , 3 , null)
+INSERT INTO Animals VALUES ('Shadow' , 12 , 2 , 'Docile' , 1 , 0 , 'Female' , 'Available' , 2 , 3 , null)
+INSERT INTO Animals VALUES ('Bubba' , 2 , 1 , 'Docile' , 1 , 0 , 'Male' , 'Available' , 5 , 5 , null)
+INSERT INTO Animals VALUES ('Ratatouille' , 1 , 1 , 'Hyper' , 1 , 1 , 'Female' , 'Available' , 5 , 5 ,  null)
+INSERT INTO Animals VALUES ('Shelly' , 2 , 5 , 'Docile' , 1 , 0 , 'Female' , 'Available' , 4 , 5 , null)
+
+INSERT INTO Rooms VALUES (101 , 1)
+INSERT INTO Rooms VALUES (102 , 2)
+INSERT INTO Rooms VALUES (103 , 3)
+INSERT INTO Rooms VALUES (104 , 4)
+INSERT INTO Rooms VALUES (105 , 5)
+INSERT INTO Rooms VALUES (201 , 6)
+INSERT INTO Rooms VALUES (202 , 7)
+INSERT INTO Rooms VALUES (203 , 8) 
+INSERT INTO Rooms VALUES (204 , null)
+INSERT INTO Rooms VALUES (205 , null)
+
