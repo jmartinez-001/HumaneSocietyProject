@@ -155,23 +155,79 @@ namespace HumaneSociety
         // TODO: Allow any of the CRUD operations to occur here
         internal static void RunEmployeeQueries(Employee employee, string crudOperation)
         {
-            throw new NotImplementedException();
+            switch (crudOperation)
+            {
+                case "delete":
+                    RemoveEmployee(employee);
+                    break;
+                case "update":
+                    UpdateEmployee(employee);
+                    break;
+                case "read":
+                    GetEmployeeByID(employee.EmployeeId);
+                    break;
+                case "create":
+                    AddEmployee(employee);
+                    break;
+                default:
+
+                    break;
+            }
+                                    
+
+        }
+
+        internal static void AddEmployee(Employee employee)
+        {
+            db.Employees.InsertOnSubmit(employee);
+            db.SubmitChanges();
+           
+        }
+
+        internal static Employee GetEmployeeByID(int id)
+        {
+            
+            Employee employee = db.Employees.Where(e => e.EmployeeId == id).Single();
+            return employee;
+        }
+
+        internal static void UpdateEmployee(Employee employeeToUpdate) //, Dictionary<int, string> updates
+        {
+            Employee employeeFromDb = db.Employees.Where(e => e.EmployeeId == employeeToUpdate.EmployeeId).Single();
+
+            employeeFromDb.FirstName = employeeToUpdate.FirstName;
+            employeeFromDb.LastName = employeeToUpdate.LastName;
+            employeeFromDb.UserName = employeeToUpdate.UserName;
+            employeeFromDb.Password = employeeToUpdate.Password;
+            employeeFromDb.Email = employeeToUpdate.Email;
+
+            db.SubmitChanges();
+        }
+
+        internal static void RemoveEmployee(Employee employee)
+        {
+            db.Employees.DeleteOnSubmit(employee);
+            db.SubmitChanges();
         }
 
         // TODO: Animal CRUD Operations
         internal static void AddAnimal(Animal animal)
         {
-            throw new NotImplementedException();
+            db.Animals.InsertOnSubmit(animal);
+            db.SubmitChanges();
         }
 
         internal static Animal GetAnimalByID(int id)
         {
-            throw new NotImplementedException();
+            Animal animal = db.Animals.Where(a => a.AnimalId == id).Single();
+            return animal;
         }       
 
         internal static void UpdateAnimal(Animal animal, Dictionary<int, string> updates)
         {
-            throw new NotImplementedException();
+            Animal animalFromDb = db.Animals.Where(a => a.AnimalId == animal.AnimalId).Single();
+
+            
         }
 
         internal static void RemoveAnimal(Animal animal)
