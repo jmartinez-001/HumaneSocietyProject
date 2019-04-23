@@ -269,7 +269,8 @@ namespace HumaneSociety
 
         internal static void RemoveAnimal(Animal animal)
         {
-            throw new NotImplementedException();
+            db.Animals.DeleteOnSubmit(animal);
+            db.SubmitChanges();
         }
 
         // TODO: Animal Multi-Trait Search
@@ -281,28 +282,41 @@ namespace HumaneSociety
         // TODO: Misc Animal Things
         internal static int GetCategoryId(string categoryName)
         {
-            throw new NotImplementedException();
+            var CategoryId = db.Categories.Where(c => c.Name == categoryName).Select(p => p.CategoryId).Single();
+            return CategoryId;
         }
         
         internal static Room GetRoom(int animalId)
         {
-            throw new NotImplementedException();
+            Room gotRoom = db.Rooms.Where(r => r.AnimalId == animalId).Single();            
+            return gotRoom;
         }
         
         internal static int GetDietPlanId(string dietPlanName)
         {
-            throw new NotImplementedException();
+            var DietPlanId = db.DietPlans.Where(d => d.Name == dietPlanName).Select(i => i.DietPlanId).Single();
+            return DietPlanId;
         }
 
         // TODO: Adoption CRUD Operations
         internal static void Adopt(Animal animal, Client client)
         {
-            throw new NotImplementedException();
+            Adoption adoption = new Adoption();
+            adoption.ClientId = client.ClientId;
+            adoption.AnimalId = animal.AnimalId;
+            adoption.PaymentCollected = true;
+            db.Adoptions.InsertOnSubmit(adoption);
+            db.SubmitChanges();
         }
 
         internal static IQueryable<Adoption> GetPendingAdoptions()
         {
-            throw new NotImplementedException();
+         
+            var pendingAdoptions = db.Adoptions.Where(a => a.ApprovalStatus == null).AsQueryable();
+            
+            return pendingAdoptions;
+
+
         }
 
         internal static void UpdateAdoption(bool isAdopted, Adoption adoption)
