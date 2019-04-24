@@ -223,45 +223,45 @@ namespace HumaneSociety
             return animal;
         }       
 
-        internal static void UpdateAnimal(Animal animal, Dictionary<int, string> updates)
+        internal static void UpdateAnimal(Animal animal, Dictionary<string, string> updates)
         {
             Animal animalFromDb = db.Animals.Where(a => a.AnimalId == animal.AnimalId).Single();
 
             var update = from u in updates
                          select u;
-            foreach (var u in update)
-            {
-                switch (u.Key)
-                {
-                    case 1:
-                        animalFromDb.CategoryId = db.Categories.Where(c => c.Name == u.Value).Select(p=>p.CategoryId).Single();
-                        break;
-                    case 2:
-                        animalFromDb.Name = u.Value;
-                        break;
-                    case 3:
-                        animalFromDb.Age = int.Parse(u.Value);
-                        break;
-                    case 4:
-                        animalFromDb.Demeanor = u.Value;
-                        break;
-                    case 5:
-                        animalFromDb.KidFriendly = bool.Parse(u.Value);
-                        break;
-                    case 6:
-                        animalFromDb.PetFriendly = bool.Parse(u.Value);
-                        break;
-                    case 7:
-                        animalFromDb.Weight = int.Parse(u.Value);
-                        break;
-                    case 8:
-                        animalFromDb.AnimalId = int.Parse(u.Value);
-                        break;
-                    default:
+            //foreach (var u in update)
+            //{ 
+                //switch (u.Key)
+                //{
+                //    case "1":
+                //        animalFromDb.CategoryId = db.Categories.Where(c => c.Name == u.Value).Select(p=>p.CategoryId).Single();
+                //        break;
+                //    case "2":
+                //        animalFromDb.Name = u.Value;
+                //        break;
+                //    case "3":
+                //        animalFromDb.Age = int.Parse(u.Value);
+                //        break;
+                //    case "4":
+                //        animalFromDb.Demeanor = u.Value;
+                //        break;
+                //    case "5":
+                //        animalFromDb.KidFriendly = bool.Parse(u.Value);
+                //        break;
+                //    case 6:
+                //        animalFromDb.PetFriendly = bool.Parse(u.Value);
+                //        break;
+                //    case 7:
+                //        animalFromDb.Weight = int.Parse(u.Value);
+                //        break;
+                //    case 8:
+                //        animalFromDb.AnimalId = int.Parse(u.Value);
+                //        break;
+                //    default:
                         
-                        break;
-                }
-            }
+                //        break;
+                //}
+            //}
 
             db.SubmitChanges();
 
@@ -274,7 +274,7 @@ namespace HumaneSociety
         }
 
         // TODO: Animal Multi-Trait Search
-        internal static IQueryable<Animal> SearchForAnimalByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
+        internal static IQueryable<Animal> SearchForAnimalByMultipleTraits(Dictionary<string, string> updates) // parameter(s)?
         {
             throw new NotImplementedException();
         }
