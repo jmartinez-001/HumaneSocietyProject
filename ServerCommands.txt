@@ -34,3 +34,15 @@ INSERT INTO Rooms VALUES (203 , 8)
 INSERT INTO Rooms VALUES (204 , null)
 INSERT INTO Rooms VALUES (205 , null)
 
+INSERT INTO Shots VALUES ('Distemper')
+INSERT INTO Shots VALUES ('Bordetella')
+INSERT INTO Shots VALUES ('Hepititis')
+INSERT INTO Shots VALUES ('Parainfluenza')
+INSERT INTO Shots VALUES ('Heartworm')
+
+INSERT INTO Addresses VALUES ('1111 N 45th st' , 'Milwaukee' , 49 , '53215') 
+INSERT INTO Addresses VALUES ('2222 N 55th st' , 'Milwaukee' , 49 , '52215')
+INSERT INTO Addresses VALUES ('3333 N 65th st' , 'Milwaukee' , 49 , '53625')
+INSERT INTO Addresses VALUES ('4444 N 75th st' , 'Milwaukee' , 49 , '53451')
+INSERT INTO Addresses VALUES ('5555 N 85th st' , 'Milwaukee' , 49 , '53131')
+
