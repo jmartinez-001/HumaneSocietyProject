@@ -163,9 +163,9 @@ namespace HumaneSociety
                 return false;
             }
         }
-        public static Dictionary<string, string> GetAnimalSearchCriteria()
+        public static Dictionary<int, string> GetAnimalSearchCriteria()
         {
-            Dictionary<string, string> searchParameters = new Dictionary<string, string>();
+            Dictionary<int, string> searchParameters = new Dictionary<int, string>();
             bool isSearching = true;
             while (isSearching)
             {
@@ -185,34 +185,34 @@ namespace HumaneSociety
             }
             return searchParameters;
         }
-        public static Dictionary<string, string> EnterSearchCriteria(Dictionary<string, string> searchParameters, string input)
+        public static Dictionary<int, string> EnterSearchCriteria(Dictionary<int, string> searchParameters, string input)
         {
             Console.Clear();
             switch (input)
             {
                 case "1":
-                    searchParameters.Add("Category", GetStringData("category", "the animal's"));
+                    searchParameters.Add(1, GetStringData("category", "the animal's"));
                     break;
                 case "2":
-                    searchParameters.Add("Name", GetStringData("name", "the animal's"));
+                    searchParameters.Add(2, GetStringData("name", "the animal's"));
                     break;
                 case "3":
-                    searchParameters.Add("Age", GetIntegerData("age", "the animal's").ToString());
+                    searchParameters.Add(3, GetIntegerData("age", "the animal's").ToString());
                     break;
                 case "4":
-                    searchParameters.Add("Demeanor", GetStringData("demeanor", "the animal's"));
+                    searchParameters.Add(4, GetStringData("demeanor", "the animal's"));
                     break;
                 case "5":
-                    searchParameters.Add("KidFriendly", GetBitData("the animal", "kid friendly").ToString());
+                    searchParameters.Add(5, GetBitData("the animal", "kid friendly").ToString());
                     break;
                 case "6":
-                    searchParameters.Add("PetFriendly", GetBitData("the animal", "pet friendly").ToString());
+                    searchParameters.Add(6, GetBitData("the animal", "pet friendly").ToString());
                     break;
                 case "7":
-                    searchParameters.Add("Weight", GetIntegerData("weight", "the animal's").ToString());
+                    searchParameters.Add(7, GetIntegerData("weight", "the animal's").ToString());
                     break;
                 case "8":
-                    searchParameters.Add("ID", GetIntegerData("ID", "the animal's").ToString());
+                    searchParameters.Add(8, GetIntegerData("ID", "the animal's").ToString());
                     break;
                 default:
                     DisplayUserOptions("Input not recognized please try agian");

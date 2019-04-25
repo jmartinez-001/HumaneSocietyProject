@@ -222,51 +222,52 @@ namespace HumaneSociety
             Animal animal = db.Animals.Where(a => a.AnimalId == id).Single();
             return animal;
         }
-        
 
-        internal static void UpdateAnimal(Animal animal, Dictionary<string, string> updates)
+
+        internal static void UpdateAnimal(Animal animal, Dictionary<int, string> updates)
         {
             Animal animalFromDb = db.Animals.Where(a => a.AnimalId == animal.AnimalId).Single();
 
             var update = from u in updates
                          select u;
-            //foreach (var u in update)
-            //{ 
-                //switch (u.Key)
-                //{
-                //    case "1":
-                //        animalFromDb.CategoryId = db.Categories.Where(c => c.Name == u.Value).Select(p=>p.CategoryId).Single();
-                //        break;
-                //    case "2":
-                //        animalFromDb.Name = u.Value;
-                //        break;
-                //    case "3":
-                //        animalFromDb.Age = int.Parse(u.Value);
-                //        break;
-                //    case "4":
-                //        animalFromDb.Demeanor = u.Value;
-                //        break;
-                //    case "5":
-                //        animalFromDb.KidFriendly = bool.Parse(u.Value);
-                //        break;
-                //    case 6:
-                //        animalFromDb.PetFriendly = bool.Parse(u.Value);
-                //        break;
-                //    case 7:
-                //        animalFromDb.Weight = int.Parse(u.Value);
-                //        break;
-                //    case 8:
-                //        animalFromDb.AnimalId = int.Parse(u.Value);
-                //        break;
-                //    default:
-                        
-                //        break;
-                //}
-            //}
+            foreach (var u in update)
+            {
+                switch (u.Key)
+                {
+                    case 1:
+                        animalFromDb.CategoryId = db.Categories.Where(c => c.Name == u.Value).Select(p => p.CategoryId).Single();
+                        break;
+                    case 2:
+                        animalFromDb.Name = u.Value;
+                        break;
+                    case 3:
+                        animalFromDb.Age = int.Parse(u.Value);
+                        break;
+                    case 4:
+                        animalFromDb.Demeanor = u.Value;
+                        break;
+                    case 5:
+                        animalFromDb.KidFriendly = bool.Parse(u.Value);
+                        break;
+                    case 6:
+                        animalFromDb.PetFriendly = bool.Parse(u.Value);
+                        break;
+                    case 7:
+                        animalFromDb.Weight = int.Parse(u.Value);
+                        break;
+                    case 8:
+                        animalFromDb.AnimalId = int.Parse(u.Value);
+                        break;
+                    default:
+
+                        break;
+                }
+            }
 
             db.SubmitChanges();
 
-            }
+        }
+
 
         internal static void RemoveAnimal(Animal animal)
         {
@@ -275,7 +276,7 @@ namespace HumaneSociety
         }
 
         // TODO: Animal Multi-Trait Search
-        internal static IQueryable<Animal> SearchForAnimalByMultipleTraits(Dictionary<string, string> updates) // parameter(s)?
+        internal static IQueryable<Animal> SearchForAnimalByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
         {
             IQueryable<Animal> animalsToSearch = db.Animals;
             animalsToSearch = animalsToSearch.Where(a => updates.Values.Equals(db.Categories.Where(c => c.Name == updates.Values.ElementAt(0)).Select(p => p.CategoryId).Single()) && updates.Values.Equals(a.Name) && updates.Values.Equals(a.Weight.ToString()) && updates.Values.Equals(a.Age.ToString()) && updates.Values.Equals(a.Demeanor) && updates.Values.Equals(a.KidFriendly.ToString()) && updates.Values.Equals(a.PetFriendly.ToString()) && updates.Values.Equals(a.Weight.ToString()) && updates.Values.Equals(a.AnimalId.ToString())).AsQueryable();
