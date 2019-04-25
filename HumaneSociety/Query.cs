@@ -191,7 +191,7 @@ namespace HumaneSociety
             return employee;
         }
 
-        internal static void UpdateEmployee(Employee employeeToUpdate) //, Dictionary<int, string> updates
+        internal static void UpdateEmployee(Employee employeeToUpdate) 
         {
             Employee employeeFromDb = db.Employees.Where(e => e.EmployeeId == employeeToUpdate.EmployeeId).Single();
 
@@ -221,47 +221,48 @@ namespace HumaneSociety
         {
             Animal animal = db.Animals.Where(a => a.AnimalId == id).Single();
             return animal;
-        }       
+        }
+        
 
-        internal static void UpdateAnimal(Animal animal, Dictionary<int, string> updates)
+        internal static void UpdateAnimal(Animal animal, Dictionary<string, string> updates)
         {
             Animal animalFromDb = db.Animals.Where(a => a.AnimalId == animal.AnimalId).Single();
 
             var update = from u in updates
                          select u;
-            foreach (var u in update)
-            {
-                switch (u.Key)
-                {
-                    case 1:
-                        animalFromDb.CategoryId = db.Categories.Where(c => c.Name == u.Value).Select(p=>p.CategoryId).Single();
-                        break;
-                    case 2:
-                        animalFromDb.Name = u.Value;
-                        break;
-                    case 3:
-                        animalFromDb.Age = int.Parse(u.Value);
-                        break;
-                    case 4:
-                        animalFromDb.Demeanor = u.Value;
-                        break;
-                    case 5:
-                        animalFromDb.KidFriendly = bool.Parse(u.Value);
-                        break;
-                    case 6:
-                        animalFromDb.PetFriendly = bool.Parse(u.Value);
-                        break;
-                    case 7:
-                        animalFromDb.Weight = int.Parse(u.Value);
-                        break;
-                    case 8:
-                        animalFromDb.AnimalId = int.Parse(u.Value);
-                        break;
-                    default:
+            //foreach (var u in update)
+            //{ 
+                //switch (u.Key)
+                //{
+                //    case "1":
+                //        animalFromDb.CategoryId = db.Categories.Where(c => c.Name == u.Value).Select(p=>p.CategoryId).Single();
+                //        break;
+                //    case "2":
+                //        animalFromDb.Name = u.Value;
+                //        break;
+                //    case "3":
+                //        animalFromDb.Age = int.Parse(u.Value);
+                //        break;
+                //    case "4":
+                //        animalFromDb.Demeanor = u.Value;
+                //        break;
+                //    case "5":
+                //        animalFromDb.KidFriendly = bool.Parse(u.Value);
+                //        break;
+                //    case 6:
+                //        animalFromDb.PetFriendly = bool.Parse(u.Value);
+                //        break;
+                //    case 7:
+                //        animalFromDb.Weight = int.Parse(u.Value);
+                //        break;
+                //    case 8:
+                //        animalFromDb.AnimalId = int.Parse(u.Value);
+                //        break;
+                //    default:
                         
-                        break;
-                }
-            }
+                //        break;
+                //}
+            //}
 
             db.SubmitChanges();
 
@@ -269,61 +270,109 @@ namespace HumaneSociety
 
         internal static void RemoveAnimal(Animal animal)
         {
-            throw new NotImplementedException();
+            db.Animals.DeleteOnSubmit(animal);
+            db.SubmitChanges();
         }
 
         // TODO: Animal Multi-Trait Search
-        internal static IQueryable<Animal> SearchForAnimalByMultipleTraits(Dictionary<int, string> updates) // parameter(s)?
+        internal static IQueryable<Animal> SearchForAnimalByMultipleTraits(Dictionary<string, string> updates) // parameter(s)?
         {
-            throw new NotImplementedException();
+            IQueryable<Animal> animalsToSearch = db.Animals;
+            animalsToSearch = animalsToSearch.Where(a => updates.Values.Equals(db.Categories.Where(c => c.Name == updates.Values.ElementAt(0)).Select(p => p.CategoryId).Single()) && updates.Values.Equals(a.Name) && updates.Values.Equals(a.Weight.ToString()) && updates.Values.Equals(a.Age.ToString()) && updates.Values.Equals(a.Demeanor) && updates.Values.Equals(a.KidFriendly.ToString()) && updates.Values.Equals(a.PetFriendly.ToString()) && updates.Values.Equals(a.Weight.ToString()) && updates.Values.Equals(a.AnimalId.ToString())).AsQueryable();
+            return animalsToSearch;
+
+
         }
 
         // TODO: Misc Animal Things
         internal static int GetCategoryId(string categoryName)
         {
-            throw new NotImplementedException();
+            var CategoryId = db.Categories.Where(c => c.Name == categoryName).Select(p => p.CategoryId).Single();
+            return CategoryId;
         }
         
         internal static Room GetRoom(int animalId)
         {
-            throw new NotImplementedException();
+            Room gotRoom = db.Rooms.Where(r => r.AnimalId == animalId).Single();            
+            return gotRoom;
         }
         
         internal static int GetDietPlanId(string dietPlanName)
         {
-            throw new NotImplementedException();
+            var DietPlanId = db.DietPlans.Where(d => d.Name == dietPlanName).Select(i => i.DietPlanId).Single();
+            return DietPlanId;
         }
 
         // TODO: Adoption CRUD Operations
         internal static void Adopt(Animal animal, Client client)
         {
-            throw new NotImplementedException();
+            Adoption adoption = new Adoption();
+            adoption.ClientId = client.ClientId;
+            adoption.AnimalId = animal.AnimalId;
+            adoption.PaymentCollected = true;
+            db.Adoptions.InsertOnSubmit(adoption);
+            db.SubmitChanges();
         }
 
         internal static IQueryable<Adoption> GetPendingAdoptions()
         {
-            throw new NotImplementedException();
+         
+            var pendingAdoptions = db.Adoptions.Where(a => a.ApprovalStatus == null).AsQueryable();
+            
+            return pendingAdoptions;
+
+
         }
 
         internal static void UpdateAdoption(bool isAdopted, Adoption adoption)
         {
-            throw new NotImplementedException();
+            Adoption adoptionFileToUpdate = db.Adoptions.Where(a => a.AnimalId == adoption.AnimalId).Single();
+            if (isAdopted == true)
+            {
+                adoptionFileToUpdate.ApprovalStatus = "Approved";
+            }
+            else
+            {
+                RemoveAdoption(adoption.AnimalId, adoption.ClientId);
+            }
         }
 
         internal static void RemoveAdoption(int animalId, int clientId)
         {
-            throw new NotImplementedException();
+            Adoption adoptionFileToRemove = db.Adoptions.Where(a => a.AnimalId == animalId && a.ClientId == clientId).Single();
+            db.Adoptions.DeleteOnSubmit(adoptionFileToRemove);
+            db.SubmitChanges();
         }
 
         // TODO: Shots Stuff
         internal static IQueryable<AnimalShot> GetShots(Animal animal)
         {
-            throw new NotImplementedException();
+            var animalShots = db.AnimalShots.Where(a => a.AnimalId == animal.AnimalId);
+
+            return animalShots.AsQueryable();
         }
 
         internal static void UpdateShot(string shotName, Animal animal)
         {
-            throw new NotImplementedException();
+            var checkForShots = db.AnimalShots.Where(a => a.AnimalId == animal.AnimalId && a.ShotId == db.Shots.Where(s => s.Name == shotName).Select(p => p.ShotId).Single());
+            if (checkForShots == null)
+            {
+                AnimalShot newRecord = new AnimalShot();
+                newRecord.AnimalId = animal.AnimalId;
+                newRecord.ShotId = db.Shots.Where(s => s.Name == shotName).Select(p => p.ShotId).Single();
+                newRecord.DateReceived = DateTime.Now;
+            }
+            else
+            {
+                AnimalShot record = new AnimalShot();
+                var aRecordToUpdate = db.AnimalShots.Where(s => s.AnimalId == animal.AnimalId && s.ShotId == db.Shots.Where(t => t.Name == shotName).Select(p => p.ShotId).FirstOrDefault());
+                record = aRecordToUpdate.FirstOrDefault();               
+                record.DateReceived = DateTime.Now;
+                
+                
+            }
+
+            db.SubmitChanges();
         }
     }
 }
